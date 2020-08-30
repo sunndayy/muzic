@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    def cfg = rootProject.ext.configuration
+
+    compileSdkVersion cfg.compileVersion
+
+    defaultConfig {
+        applicationId cfg.applicationId
+        minSdkVersion cfg.minVersion
+        targetSdkVersion cfg.targetVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    apply from: '../buildsystem/deps.gradle'
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation libs.kotlinStdLib
+    implementation libs.kotlinCoroutineCore
+    implementation libs.kotlinCoroutineAndroid
+
+    implementation libs.androidX
+    implementation libs.coreKtx
+    implementation libs.fragmentKtx
+    implementation libs.annotation
+    implementation libs.appCompat
+    implementation libs.material
+    implementation libs.constraintLayout
+    implementation libs.recyclerView
+
+    implementation libs.okHttp
+    implementation libs.okHttpLogging
+    implementation libs.retrofit
+    implementation libs.gson
+    implementation libs.gsonConverter
+    implementation libs.viewModel
+    implementation libs.liveData
+
+    implementation libs.dagger
+    kapt libs.daggerCompiler
+    implementation libs.daggerAndroid
+    kapt libs.daggerAndroidCompiler
+
+    testImplementation testLibs.junit
+    androidTestImplementation testLibs.espressoCore
+
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+}

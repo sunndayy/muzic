@@ -1,0 +1,11 @@
+def configuration = [:]
+
+configuration.applicationId = "vn.com.muzic"
+configuration.compileVersion = 30
+configuration.minVersion = 21
+configuration.targetVersion = 30
+
+configuration.versionCode = 1
+configuration.versionName = "1.0.0"
+
+ext.configuration = configuration
